@@ -21,7 +21,9 @@ namespace AbySalto.Junior
             });
 
             builder.Services.AddDbContext<IApplicationDbContext, ApplicationDbContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
+                b => b.MigrationsAssembly("AbySalto.Junior")
+                ));
 
             var app = builder.Build();
 
