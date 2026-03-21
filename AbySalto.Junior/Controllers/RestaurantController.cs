@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AbySalto.Junior.Common;
 using Application.DTOs;
+using Application.Interfaces.Services;
 using Domain.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AbySalto.Junior.Controllers
 {
@@ -8,37 +10,40 @@ namespace AbySalto.Junior.Controllers
     [ApiController]
     public class RestaurantController : ControllerBase
     {
-        public RestaurantController(RestaurantController _restaurantRepository)
+        private readonly IOrderService _orderService;
+        public RestaurantController(IOrderService orderService)
         {
-
+            _orderService = orderService;
         }
 
-        [HttpGet("orders")]
-        public IEnumerable<Order> GetAllOrders()
+        [HttpGet]
+        public async Task<IActionResult> GetAllOrders([FromQuery] bool sortByTotal = false)
         {
-            return Enumerable.Empty<Order>();
+            var result = await _orderService.GetAllOrders(sortByTotal);
+            return StatusHandler.HandleResult(this, result);
         }
 
-        [HttpGet("orders/{id}")]
-        public Order GetOrderById()
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetOrderById(int id)
         {
-            return new Order();
+            var result = await _orderService.GetOrderById(id);
+            return StatusHandler.HandleResult(this, result);
         }
 
-        [HttpPost("new")]
-        public int AddOrder([FromBody] PostOrderDTO newOrder)
+        [HttpPost]
+        public async Task<IActionResult> AddOrder([FromBody] PostOrderDTO dto)
         {
-            return 0;
+            var result = await _orderService.AddOrder(dto);
+            return StatusHandler.HandleResult(this, result);
         }
-        [HttpPut("edit")]
-        public int EditOrder([FromBody] Order order)
+
+
+        [HttpPut("{id}/status")]
+        public async Task<IActionResult> UpdateOrderStatus(int id, [FromBody] int orderStatusId)
         {
-            return 0;
+            var result = await _orderService.UpdateOrderStatus(id, orderStatusId);
+            return StatusHandler.HandleResult(this, result);
         }
-        [HttpDelete("delete/{id}")]
-        public int DeleteOrder([FromRoute] int id)
-        {
-            return 0;
-        }
+
     }
 }
