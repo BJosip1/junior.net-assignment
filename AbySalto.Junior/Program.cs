@@ -1,5 +1,6 @@
-
 using AbySalto.Junior.Infrastructure.Database;
+using Application;
+using Application.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -24,7 +25,7 @@ namespace AbySalto.Junior
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
                 b => b.MigrationsAssembly("AbySalto.Junior")
                 ));
-
+            builder.Services.AddApplication();
             var app = builder.Build();
 
             if (app.Environment.IsDevelopment())

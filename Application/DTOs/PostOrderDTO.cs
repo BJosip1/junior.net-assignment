@@ -1,10 +1,4 @@
 ﻿using Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace Application.DTOs
 {
@@ -29,6 +23,7 @@ namespace Application.DTOs
                 Note = Note,
                 Currency = Currency,
                 PaymentMethodId = PaymentMethodId,
+                Items = Items.Select(i => i.ToModel()).ToList()
             };
         }
     }

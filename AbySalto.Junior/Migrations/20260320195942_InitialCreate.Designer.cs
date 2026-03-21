@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AbySalto.Junior.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260320165535_InitialCreate")]
+    [Migration("20260320195942_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
